@@ -5,11 +5,17 @@ import COLORS from '../consts/colors'
 import  Icon  from 'react-native-vector-icons/Feather'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import { FlatList } from 'react-native'
+import plants from '../consts/plants'
 
-const HomeScreen = () => {
+import Card from '../components/Card'
+
+
+const HomeScreen = ({navigation}) => {
 
     const categories = ["POPULAR", "ORGANIC", "SYNTHETIC", "INDOORS"];
-    const [selected, setSelected] = useState(0)
+    const [selected, setSelected] = useState(0);
+    
 
     const CategoryList = () => {
         return (
@@ -25,6 +31,8 @@ const HomeScreen = () => {
             </View>
         )
     }
+
+    
   return (
     <SafeAreaView style = {styles.background}>
       <View style = {styles.header}>
@@ -51,6 +59,18 @@ const HomeScreen = () => {
          </View>
       </View>
       <CategoryList />
+      <FlatList
+        data={plants}
+        columnWrapperStyle= {{justifyContent: "space-between"}}
+        numColumns = {2}
+        showsVerticalScrollIndicator = {false}
+        contentContainerStyle = {{
+            marginTop: 10,
+            paddingBottom: 50
+        }}
+        renderItem={({item}) => {
+            return <Card plant={item} navigation = {navigation} />;
+          }} />
     </SafeAreaView>
   )
 }
@@ -105,7 +125,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         borderBottomWidth: 2,
         borderColor: COLORS.green,
-    }
+    },
+    
     
 })
 
